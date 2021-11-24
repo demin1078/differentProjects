@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="first.css">
+</head>
+<body onload="load()">
+    <div id=page>
+    <div id = top>
+        
+    </div>
+    <div id = "greet"> 
+        <div class=column></div>
+        <div id = mainContent>
+        <div id = start>
+        <div id = nameEnter></div>
+        <div id = advice>
+        <p>Сегодня тебе нужно будет выбирать значения из представленных вариантов, чтобы направить свою команду к успеху.</p>
+        <p>Советую выбирать рационально и тогда всё обязательно получится!!!</p>
+        </div>
+        <div id = "border">
+
+        </div>
+        <div id = startData>
+            <div >
+                Сейчас в мире:
+                <div class="dataType" id="inWorld"></div>
+            </div>
+            <div>
+                Ваш тип общества:
+                <div class="dataType" id= society></div>
+            </div>
+            <div>
+                На рынке:
+                <div class="dataType" id=marketHtml></div>
+            </div>
+            <div >
+                В населении преобладает:
+                <div class="dataType" id = dominate></div>
+            </div>
+        </div>
+        <p>Свою последующую игру ты должен строить относительно этих данных</p>
+    <div id = startButton>
+    <input  type="button" value = "Нажми, чтобы начать" onclick="begin()">
+    </div>
+    </div>
+    <div id = foot>
+        <div class="decor" id = leftDecor></div>
+        <div class="clLeftDoor" id = leftDoor></div>
+        <div class = clRightDoor id = rightDoor></div>
+        <div class=decor></div>
+    </div>
+    </div>
+    <div class=column></div>
+    </div>
+    <div id = secondPart> 
+        <div id = secondWrap>
+        <div id = sWchose>
+        <div id = employee class = scale>
+            <div class = span>Выберите ваших сотрудников относительно обстановки в мире</div>
+            <ul>
+                <li class = liPink>Низкоквалифицированный</li>
+                <li>
+                    <form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+                        <input name="flevel" id="lowBar" type="range" min="0" max="100"  step="1">
+                        <output for="lowBar" name="level">50</output>
+                    </form>
+                </li>
+                <li class = liPink>Высококвалифицированный</li>
+                <li>
+                    <form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+                        <input name="flevel" id="highBar" type="range" min="0" max="100"  step="1">
+                        <output for="highBar" name="level">50</output>
+                    </form>
+                </li>
+                <li class = liPink>Профессиональные руководители</li>
+                <li>
+                    <form onsubmit="return false" oninput="level.value = flevel.valueAsNumber">
+                        <input name="flevel" id="professionalBar" type="range" min="0" max="100"  step="1">
+                        <output for="professionalBar" name="level">50</output>
+                    </form>
+                </li>
+            </ul>
+        </div>
+        <div id = scaleOfProduct>
+            <div class = scale id = scaleProduct>
+                <div class = span >Выберите масштаб производства относительно обстановки в мире </div>
+                <div>
+                    Высокий
+                    <img id = firstImage src="scale_1200.jpg" alt="" onclick="scalePhoto(this)">
+                </div>
+                <div>
+                    Средний
+                    <img src="middle.jpg" alt="" onclick="scalePhoto(this)" > 
+                </div>
+                <div>
+                    Низкий
+                    <img src="little.jpg" alt="" onclick="scalePhoto(this)">
+                </div>
+            </div>
+        </div>
+        <div id = typeOfProduct>
+            <div class = scale>
+                <div class = span> Выберите тип товара<br>Относительно обстановки в мире</div>
+                <select size="15"  name="hero[]" id = selector>
+                    <option value="0">Роскошь</option>
+                    <option selected value="1">Продукты</option>
+                    <option value="2">продукты промыш. назначения</option>
+                    
+                   </select>
+            </div>
+        </div>
+        </div>
+        <div id = sWbut>
+        <input id = resButton type="button" onclick="yieldResult()" value = "Закончить работу">
+        </div>
+    </div>
+    </div>
+    </div>
+    <script src = "first.js" async></script>
+
+</body>
+</html>
