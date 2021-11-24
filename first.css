@@ -1,0 +1,248 @@
+@keyframes back {
+    from{
+        background-color: gold;
+    }
+    30%{
+        background-color: rgb(218, 151, 51);
+    }
+    60%{
+        background-color: rgb(31, 21, 9);
+    }
+    100%{
+        background-color: gold;
+    }
+   
+}
+
+*{
+    padding: 0;
+    margin:0;
+}
+#page{
+    width: 100%;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+#page{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+#top{
+    width: 100%;
+    height: 80px;
+    background-color: darkred;
+    animation-name: back;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+}
+#greet{
+    width: 100%;
+    height: 700px;
+    background-color: rgb(250, 227, 209);
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    font-size: 18px;
+}
+.column{
+
+    animation-name: back;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
+    width: 10%;
+    background-color: darkred;
+}
+#mainContent{
+   
+    margin-top: 20px;
+    width: 80%;
+}
+#nameEnter{
+    text-align: center;
+    padding-bottom: 50px;
+    font-size: 25px;
+}
+#advice{
+    padding: 7px;
+    border: 2px solid black;
+    border-radius: 4px;
+    background-color: rgb(246, 181, 255);
+}
+#border{
+    height: 40px;
+    background-color: rgb(243, 182, 207);
+}
+#startData{
+    height: 130px;
+    border: 2px solid deepskyblue;
+    border-radius: 4px;
+    background-color: deepskyblue;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+.dataType{
+    padding-top: 30px;
+}
+#foot{
+    width: 100%;
+    height: 5%;
+    display: flex;
+}
+#start{
+    padding-left: 10%;
+    width: 80%;
+    height: 95%;
+}
+.decor{
+   width: 35%; 
+   animation:back infinite 20s;
+}
+#leftDecor{
+    width: 35%;
+}
+#leftDoor{
+    width: 15%;
+    animation: back 20s infinite;
+}
+#rightDoor{
+    width: 15%;
+    animation: back 20s infinite;
+}
+.leftDoorOpen{
+    transition-duration: 8s;
+    -webkit-transform-origin:0% 100%;
+    -moz-transform-origin: 0% 100%;
+    -o-transform-origin: 0% 100%;
+    -ms-transform-origin: 0% 100%;
+    transform-origin: 0% 100%;
+    /* Поворачиваем на 20 градусов против часовой стрелки */
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+
+}
+.rightDoorOpen{
+    transition-duration: 8s;
+    -webkit-transform-origin:0% 0%;
+    -moz-transform-origin: 0% 0%;
+    -o-transform-origin: 0% 0%;
+    -ms-transform-origin: 0% 0%;
+    transform-origin: 100% 100%;
+    
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+#startButton{
+    display: flex;
+    justify-content: center;
+    padding-top: 38px;
+}
+#startButton input{
+    width: 50%;
+    height: 50px;
+    background-color: rgb(209, 76, 176);
+    color: white;
+}
+/* Здесть поставить display:none */
+#secondPart{
+    padding-top: 80px;
+    display: flex;
+    height: 700px;
+    justify-content: space-around;
+    width: 100%;
+    background-color: rgb(189, 200, 252);
+}
+#employee ul{
+    list-style: none;
+}
+#employee ul li{
+    list-style: none;
+    text-align: center;
+    padding-bottom: 10px;
+}
+#employee ul li input{
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.liPink{
+    text-align: center;
+    height: 40px;
+    background-color: violet;
+    color: blue;
+    font-size: 20px;
+}
+#secondWrap{
+    display: flex;
+    width: 100%;
+    height: 70%;
+    flex-direction: column;
+    justify-content: space-around;
+}
+#employee, #scaleOfProduct, #typeOfProduct{
+    border: 3px solid rgb(45, 36, 179);
+    border-radius: 5px;
+    width: 20%;
+    background-color: rgb(206, 238, 235);
+}
+#employee{
+    width: 16%;
+}
+.span{
+    font-size: 18px;
+    margin-bottom: 29px;
+}
+.scale{
+    padding: 30px;
+}
+#scaleProduct{
+    display: flex;
+    flex-direction: column;
+}
+#scaleProduct div{
+    height: 80px;
+    padding-bottom: 20px;
+}
+#scaleProduct .span{
+    padding:0;
+}
+#scaleProduct img{
+    width: 100%;
+    height: 100%;
+}
+#scaleOfProduct #firstImage{
+    width: 110%;
+    height: 110%;
+}
+#typeOfProduct .scale{
+    display: flex;
+    flex-direction: column;
+}
+#resButton{
+    margin-top: 60px;
+    height: 50px;
+    width: 18%;
+}
+#sWchose{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+#sWbut{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.scale select{
+
+}
