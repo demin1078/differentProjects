@@ -8,10 +8,13 @@ import pyautogui
 import win32api
 from PIL import ImageGrab
 
+PHOTO_PTH = "C:\\Users\\dimag\\differentProjects\\fishing\\PHOTOES"
+
+
 time_between_games = 7
 
-x_cursor = [544]
-y_cursor = [120]
+x_cursor = [1305]
+y_cursor = [382]
 
 fishing_rod = (801, 208)
 
@@ -24,6 +27,7 @@ needle_img = cv.imread('area.png', cv.IMREAD_UNCHANGED)
 autorise_img = cv.imread('login.png', cv.IMREAD_UNCHANGED)
 abort = cv.imread('reconnecting.png', cv.IMREAD_UNCHANGED)
 good_float = cv.imread('good_float.png', cv.IMREAD_UNCHANGED)
+
 def checkLogouting():
     screenshot = pyautogui.screenshot()
     haystack_img = cv.cvtColor(np.array(screenshot.copy()), cv.COLOR_RGB2BGR)
@@ -46,10 +50,11 @@ def checkLogouting():
         pyautogui.mouseDown(button='left')
         time.sleep(0.2)
         pyautogui.mouseUp(button='left')
-def cursor_coord_func(x_cursor, y_cursor):
-    return (x_cursor-6, y_cursor-15, x_cursor + 15, y_cursor + 15)
-def catching_fish():
 
+def cursor_coord_func(x_cursor, y_cursor):
+    return (x_cursor-20, y_cursor-20, x_cursor + 20, y_cursor + 20)
+
+def catching_fish():
     global caught_fish
     # time.sleep(0.05)
     # pyautogui.moveTo(827 + random.randint(1,15), 226 + random.randint(1,15))
@@ -111,12 +116,15 @@ def start_fishing(place_numb):
     fishing_rod_to = (x_cursor[place_numb] - 40, y_cursor[place_numb] - 40)
     i = 0
     # mouse movement
+
+    # pyautogui.moveTo(fishing_rod)
+    # pyautogui.mouseDown(button='left')
+    # time.sleep(1.5)
+    # pyautogui.mouseUp(button='left')
     pyautogui.moveTo(fishing_rod)
     pyautogui.mouseDown(button='left')
-    time.sleep(2.5)
-    pyautogui.mouseUp(button='left')
     pyautogui.moveTo(fishing_rod_to)
-    time.sleep(0.1)
+    time.sleep(2.5)
     while True:
         screenshot = ImageGrab.grab(bbox=cursor_coord)
         # Aim dote
@@ -131,21 +139,24 @@ def start_fishing(place_numb):
         #         or (pixel_color[1] >110 and pixel_color[0]>110):
         # print(max_val, i)
         if max_val <= 0.3:
-            # screenshot.save(f'f/скрин{i}поймал.png')
-            # i += 1
-            # time.sleep(0.01)
-            break
-        # else:
-        #     i += 1
-        #     screenshot.save(f'f/скрин{i}Попловок.png')
+            print( min_val, max_val, min_loc, max_loc)
+            screenshot.save(f'{PHOTO_PTH}\поймал{i}.png')
+            i += 1
+            time.sleep(0.01)
+
+        else:
+            print(min_val, max_val, min_loc, max_loc)
+            i += 1
+            screenshot.save(f'{PHOTO_PTH}\Попловок{i}.png')
 
 
 #Основной цикл
 while True:
     caught_fish = 0
     if keyboard.is_pressed('p'):
+        print("Была нажата p")
         pixel_coords()
-    if keyboard.is_pressed('f'):
+    if keyboard.is_pressed('y'):
         while True:
 
             # if caught_fish % 13 == 0 and caught_fish != 0:
