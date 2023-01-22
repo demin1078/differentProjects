@@ -7,14 +7,21 @@ import numpy as np
 import pyautogui
 import win32api
 from PIL import ImageGrab
+from os import listdir
+from os.path import isfile, join
+import os
+import re
 
+THRESHOLD_CATCH = 0.4
+THRESHOLD_BAR = 0.05
 PHOTO_PTH = "C:\\Users\\dimag\\differentProjects\\fishing\\PHOTOES"
+DEBUG = 0
 
 
 time_between_games = 7
 
-x_cursor = [1305]
-y_cursor = [382]
+x_cursor = [1316]
+y_cursor = [403]
 
 fishing_rod = (801, 208)
 
@@ -26,7 +33,15 @@ catch_indicator_coord = [x_indicator, y_indicator, 190, 20]
 needle_img = cv.imread('area.png', cv.IMREAD_UNCHANGED)
 autorise_img = cv.imread('login.png', cv.IMREAD_UNCHANGED)
 abort = cv.imread('reconnecting.png', cv.IMREAD_UNCHANGED)
-good_float = cv.imread('good_float.png', cv.IMREAD_UNCHANGED)
+
+# hooks
+hooks = []
+mypath = "hooks/"
+all_files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+for fl in all_files:
+    pth = mypath+fl
+    hk_img = cv.imread(pth, 0)
+    hooks.append(hk_img)
 
 def checkLogouting():
     screenshot = pyautogui.screenshot()
@@ -51,8 +66,10 @@ def checkLogouting():
         time.sleep(0.2)
         pyautogui.mouseUp(button='left')
 
+
 def cursor_coord_func(x_cursor, y_cursor):
-    return (x_cursor-20, y_cursor-20, x_cursor + 20, y_cursor + 20)
+    return (x_cursor-25, y_cursor-25, x_cursor + 25, y_cursor + 25)
+
 
 def catching_fish():
     global caught_fish
@@ -75,18 +92,19 @@ def catching_fish():
         haystack_img = cv.cvtColor(np.array(screenshot.copy()), cv.COLOR_RGB2BGR)
         result = cv.matchTemplate(haystack_img, needle_img, cv.TM_CCOEFF_NORMED)
         min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result)
-        # print(max_val,  i)
-        #screenshot.save(f'f/bar{i}.png')
-        if max_val <= 0.5 or i >= 1700:
+        if DEBUG:
+            screenshot.save(f"PHOTOES/bar{i}.png")
+            print(min_val, max_val, i)
+        if max_val <= THRESHOLD_BAR or i >= 1700:
             pyautogui.mouseUp(button='left')
             caught_fish += 1
             print(f'Рыбка {caught_fish}  поймана')
             break
 
-        for j in range(numb+5):
+        for j in range(numb + 5):
             coord = (70 - j * bias, 10)
             pixel = screenshot.getpixel(coord)
-            if pixel[0] > 130 and pixel[1] > 130 and pixel[2]> 130 and is_pressed == 0:
+            if pixel[0] > 130 and pixel[1] > 130 and pixel[2] > 130 and is_pressed == 0:
                 is_pressed = 1
 
                 pyautogui.mouseDown(button='left')
@@ -111,47 +129,66 @@ def pixel_coords():
             time.sleep(0.1)
 
 def start_fishing(place_numb):
+    print("Начинаю ловить")
     cursor_coord = cursor_coord_func(x_cursor[place_numb], y_cursor[place_numb])
     fishing_rod = (x_cursor[place_numb], y_cursor[place_numb])
     fishing_rod_to = (x_cursor[place_numb] - 40, y_cursor[place_numb] - 40)
-    i = 0
-    # mouse movement
 
-    # pyautogui.moveTo(fishing_rod)
-    # pyautogui.mouseDown(button='left')
-    # time.sleep(1.5)
-    # pyautogui.mouseUp(button='left')
+    # mypath = "PHOTOES/"
+    # all_files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    # max_catch = max([int(re.search("поймал(.*)\.png", f).group(1)) for f in all_files if "поймал" in f])
+    # max_hook = max([int(re.search("Попловок(.*)\.png", f).group(1)) for f in all_files if "Попловок" in f])
+    # i = max([max_catch, max_hook]) + 1
+
+    i = 0
+
     pyautogui.moveTo(fishing_rod)
     pyautogui.mouseDown(button='left')
     pyautogui.moveTo(fishing_rod_to)
     time.sleep(2.5)
     while True:
         screenshot = ImageGrab.grab(bbox=cursor_coord)
-        # Aim dote
+        haystack_img = cv.cvtColor(np.array(screenshot.copy()), cv.COLOR_BGR2GRAY)
 
-        #print(f"Скрин {i} {pixel_color}")
-
-        haystack_img = cv.cvtColor(np.array(screenshot.copy()), cv.COLOR_RGB2BGR)
-        result = cv.matchTemplate(haystack_img, good_float, cv.TM_CCOEFF_NORMED)
-        min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result)
+        maxs = []
+        for hook in hooks:
+            mtch = cv.matchTemplate(haystack_img, hook, cv.TM_CCOEFF_NORMED)
+            _, max_val, _, _ = cv.minMaxLoc(mtch)
+            maxs.append(max_val)
+        average = sum(maxs)/len(maxs)
 
         # if (pixel_color[2] > pixel_color[1] and pixel_color[2] > pixel_color[0] and diff > 40)\
         #         or (pixel_color[1] >110 and pixel_color[0]>110):
-        # print(max_val, i)
-        if max_val <= 0.3:
-            print( min_val, max_val, min_loc, max_loc)
-            screenshot.save(f'{PHOTO_PTH}\поймал{i}.png')
+
+        if DEBUG: (average, i)
+        if average <= THRESHOLD_CATCH:
+            if DEBUG: screenshot.save(f'{PHOTO_PTH}\поймал{i}.png')
             i += 1
-            time.sleep(0.01)
+            pyautogui.mouseUp(button='left')
+            time.sleep(0.1)
+            return 1
 
         else:
-            print(min_val, max_val, min_loc, max_loc)
             i += 1
-            screenshot.save(f'{PHOTO_PTH}\Попловок{i}.png')
+            if DEBUG: screenshot.save(f'{PHOTO_PTH}\Попловок{i}.png')
+
+
+def change_fl_names():
+    mypath = "PHOTOES/"
+    all_files = [f for f in listdir(mypath) if isfile(join(mypath, f))]
+    i = 0
+    for fl in all_files:
+        if "поймал" in fl:
+            i +=1
+            new_file = fl.replace("поймал", "Попловок")
+            if new_file not in all_files:
+                os.rename(mypath + fl, mypath + new_file)
+    print("Названия заменины")
 
 
 #Основной цикл
 while True:
+
     caught_fish = 0
     if keyboard.is_pressed('p'):
         print("Была нажата p")
@@ -166,7 +203,7 @@ while True:
             #     time.sleep(time_between_games + random.randint(0,2))
             start_fishing(0)
             catching_fish()
-            time.sleep(3)
+            time.sleep(5)
 
     if keyboard.is_pressed('i'):
         catch_fish()
